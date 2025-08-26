@@ -1,0 +1,11 @@
+@EndUserText: {
+  label: 'Service Definition for ZPOSC_HEADER_POSAPP'
+}
+@ObjectModel: {
+  leadingEntity: {
+    name: 'ZPOSC_HEADER_POSAPP'
+  }
+}
+define service ZPOSUI_HEADER_POS_O4APP provider contracts odata_v4_ui {
+  expose ZPOSC_HEADER_POSAPP as HeaderApp;
+}

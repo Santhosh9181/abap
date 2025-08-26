@@ -1,0 +1,79 @@
+managed implementation in class zbp_i_header_pos unique;
+strict ( 2 );
+with draft;
+
+define behavior for ZI_HEADER_POS alias HeaderPos
+persistent table zheader_pos
+draft table zdheader_pos
+lock master total etag LocalLastChangeOn
+authorization master ( instance )
+etag master LocalLastChangeOn
+{
+  create ( authorization : global );
+  update;
+  delete;
+
+  draft action Edit;
+  draft action Activate;
+  draft action Discard;
+  draft action Resume;
+  draft determine action Prepare;
+
+  field ( readonly) InvUuid;
+  field ( numbering : managed ) InvUuid;
+  association _ItemPos { create; with draft; }
+
+
+  mapping for zheader_pos
+  {
+      InvUuid           = inv_uuid;
+      Invoicenumber     = invoicenumber;
+      customername      = customername;
+      phonenumber       = phonenumber;
+      total             = total;
+      currency          = currency;
+      LocalLastChangeOn = local_last_change_on;
+      LastChangeOn      = last_change_on;
+      createdby         = createdby;
+      LocalLastChangeBy = local_last_change_by;
+      LastChangeBy      = last_change_by;
+  }
+}
+
+
+
+define behavior for ZI_ITEM_POS alias ItemPos
+persistent table zitem_pos
+draft table zditem_pos
+lock dependent by _headerPos
+authorization dependent by _headerPos
+etag master LocalLastChangeOn
+{
+  update;
+  delete;
+  field ( readonly ) InvUuid, InvItmUuid;
+  field ( numbering : managed ) InvItmUuid ;
+  association _headerPos { with draft; }
+
+  mapping for zitem_pos
+  {
+
+    InvUuid            = inv_uuid;
+    InvItmUuid         = inv_itm_uuid;
+    invoicenumber      = invoicenumber;
+    itemnumber         = itemnumber;
+    quantity           = quantity;
+    quanunit           = quanunit;
+    priceeach          = priceeach;
+    total              = total;
+    currency           = currency;
+    LocalLastChangeOn  = local_last_change_on;
+    LastChangeOn       = last_change_on;
+    createdby          = createdby;
+    LocalLastChangeBy  = local_last_change_by;
+    LastChangeBy       = last_change_by;
+
+  }
+
+
+}

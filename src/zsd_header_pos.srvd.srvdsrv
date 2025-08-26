@@ -1,0 +1,5 @@
+@EndUserText.label: 'Service Definition Header POS'
+define service ZSD_HEADER_POS {
+  expose ZC_HEADER_POS;
+  expose ZC_ITEM_POS;
+}

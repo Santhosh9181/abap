@@ -1,0 +1,26 @@
+projection;
+strict ( 2 );
+use draft;
+
+define behavior for ZC_HEADER_POS alias HeaderPos
+{
+  use create;
+  use update;
+  use delete;
+
+  use action Edit;
+  use action Activate;
+  use action Discard;
+  use action Resume;
+  use action Prepare;
+
+  use association _ItemPos { create; with draft; }
+}
+
+define behavior for ZC_ITEM_POS alias ItemPos
+{
+  use update;
+  use delete;
+
+  use association _headerPos { with draft; }
+}

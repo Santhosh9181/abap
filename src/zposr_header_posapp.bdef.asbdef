@@ -1,0 +1,53 @@
+managed implementation in class ZPOSBP_R_HEADER_POSAPP unique;
+strict ( 2 );
+with draft;
+extensible;
+define behavior for ZPOSR_HEADER_POSAPP alias HeaderApp
+persistent table ZHEADER_POS
+extensible
+draft table ZPOSHDR_POS_DAPP
+etag master LocalLastChangeOn
+lock master total etag LastChangeOn
+authorization master( global )
+
+{
+  field ( mandatory : create )
+   InvUuid;
+
+  field ( readonly )
+   LocalLastChangeOn,
+   LastChangeOn,
+   Createdby,
+   LocalLastChangeBy,
+   LastChangeBy;
+
+  field ( readonly : update )
+   InvUuid;
+
+
+  create;
+  update;
+  delete;
+
+  draft action Activate optimized;
+  draft action Discard;
+  draft action Edit;
+  draft action Resume;
+  draft determine action Prepare;
+
+  mapping for ZHEADER_POS corresponding extensible
+  {
+    InvUuid = inv_uuid;
+    Invoicenumber = invoicenumber;
+    Customername = customername;
+    Phonenumber = phonenumber;
+    Total = total;
+    Currency = currency;
+    LocalLastChangeOn = local_last_change_on;
+    LastChangeOn = last_change_on;
+    Createdby = createdby;
+    LocalLastChangeBy = local_last_change_by;
+    LastChangeBy = last_change_by;
+  }
+
+}
